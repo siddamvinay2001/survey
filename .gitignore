@@ -1,36 +1,69 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-/node_modules
-/.pnp
+# ---- dependencies ----
+node_modules
+.pnp
 .pnp.js
+.pnpm-store
 
-# testing
-/coverage
+# ---- build outputs ----
+dist
+build
+out
+.next
+.turbo
+*.tsbuildinfo
+next-env.d.ts
 
-# next.js
-/.next/
-/out/
+# ---- testing ----
+coverage
+.nyc_output
+playwright-report
+test-results
 
-# production
-/build
+# ---- Rust / Anchor / Solana ----
+target
+**/target
+.anchor
+**/.anchor
+*.so
+test-ledger
+.crates.toml
+.crates2.json
 
-# misc
-.DS_Store
+# ---- Prisma ----
+packages/db/prisma/migrations/dev.db*
+
+# ---- env files ----
+.env
+.env*.local
+.env.development
+.env.production
+!.env.example
+
+# ---- secrets / keypairs ----
 *.pem
+*.key
+*-keypair.json
+**/keypairs/
+validator-keypair.json
 
-# debug
+# ---- editor / OS ----
+.DS_Store
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea
+*.swp
+*.swo
+
+# ---- vercel ----
+.vercel
+
+# ---- logs ----
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# local env files
-.env*.local
-.env
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+pnpm-debug.log*
+logs
+*.log

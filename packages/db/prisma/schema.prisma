@@ -1,0 +1,110 @@
+// Survey platform — Postgres schema (Prisma).
+//
+// On-chain authority is the source of truth for economic state (locked SOL,
+// reward pool, slashing). This DB stores survey content, encrypted responses,
+// and the validator audit trail. Anything appearing here can be reconstructed
+// from chain events + the commitment hashes; nothing here can override on-chain
+// economic state.
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum SurveyState {
+  draft
+  open
+  closed
+  settled
+}
+
+enum Verdict {
+  pending
+  honest
+  spam
+}
+
+model User {
+  id        String   @id @default(cuid())
+  wallet    String   @unique
+  createdAt DateTime @default(now())
+
+  surveysCreated Survey[]   @relation("CreatedBy")
+  responses      Response[]
+}
+
+model Survey {
+  id                   String      @id @default(cuid())
+  pdaAddress           String      @unique
+  surveyIdOnChain      Bytes
+  creatorWallet        String
+  creator              User        @relation("CreatedBy", fields: [creatorWallet], references: [wallet])
+  contentJson          Json
+  contentHash          String
+  rewardPoolLamports   String
+  stakeLamports        String
+  maxParticipants      Int
+  state                SurveyState @default(draft)
+  validatorPubkey      String
+  createdAt            DateTime    @default(now())
+  closedAt             DateTime?
+  settledAt            DateTime?
+
+  responses Response[]
+
+  @@index([state])
+  @@index([creatorWallet])
+}
+
+model Response {
+  id               String   @id @default(cuid())
+  surveyId         String
+  survey           Survey   @relation(fields: [surveyId], references: [id])
+  participantWallet String
+  participant      User     @relation(fields: [participantWallet], references: [wallet])
+  commitmentHash   String
+  encryptedPayload String
+  submittedAt      DateTime @default(now())
+  stakeLamports    String
+
+  score Score?
+
+  @@unique([surveyId, participantWallet])
+  @@index([surveyId])
+}
+
+model Score {
+  id          String   @id @default(cuid())
+  responseId  String   @unique
+  response    Response @relation(fields: [responseId], references: [id])
+  verdict     Verdict  @default(pending)
+  heuristics  Json
+  llm         Json?
+  scoredAt    DateTime @default(now())
+  validatorRunId String?
+  validatorRun ValidatorRun? @relation(fields: [validatorRunId], references: [id])
+
+  @@index([verdict])
+}
+
+// One row per settlement batch the backend submits to the program. Stores
+// inputs + outputs so a dispute can be replayed against the same model state.
+model ValidatorRun {
+  id             String   @id @default(cuid())
+  surveyId       String
+  txSignature    String?
+  promptVersion  String
+  modelId        String
+  startedAt      DateTime @default(now())
+  completedAt    DateTime?
+
+  scores Score[]
+
+  @@index([surveyId])
+}
