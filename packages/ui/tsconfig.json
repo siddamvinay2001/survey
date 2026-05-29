@@ -1,9 +1,10 @@
 {
-  "extends": "@survey/config/tsconfig.base.json",
+  "extends": "@survey/config/tsconfig.lib.json",
   "compilerOptions": {
-    "jsx": "preserve",
-    "lib": ["ES2022", "DOM"],
-    "noEmit": true
+    "paths": {
+      "@survey/ui/*": ["./src/*"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

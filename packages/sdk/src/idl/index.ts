@@ -4,9 +4,8 @@
 // re-export so apps can import @survey/sdk/idl without depending on the
 // anchor target directory.
 
-export type SurveyIdl = {
-  version: '0.1.0';
-  name: 'survey';
-  instructions: unknown[];
-  accounts: unknown[];
+import type { Idl } from '@coral-xyz/anchor';
+
+export type SurveyIdl = Idl & {
+  metadata: { name: 'survey'; version: '0.1.0'; spec: '0.1.0' };
 };

@@ -30,7 +30,7 @@ Solana storage is expensive (~0.007 SOL/KB rent). When in doubt, off-chain wins.
 
 ### TypeScript
 - `strict: true` everywhere — no `any`, no implicit returns.
-- No default exports for components. Use named exports.
+- No default exports for components. Use named exports. **Exception:** Next.js App Router requires default exports for `page.tsx` and `layout.tsx` routing files — this is a framework constraint, not a violation.
 - Import via workspace aliases (`@survey/sdk`, `@survey/db`, `@survey/types`). Do not reach across packages with deep relative paths.
 - Server-only code lives in `apps/web/server/` or files with `import 'server-only'`. Never import the validator signer or Prisma client into a client component.
 
