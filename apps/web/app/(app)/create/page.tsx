@@ -1,4 +1,7 @@
-import { HugeiconsIcon, type IconSvgElement } from '@hugeicons/react';
+'use client';
+
+import { useState } from 'react';
+import { HugeiconsIcon } from '@hugeicons/react';
 import {
   Add01Icon,
   Coins01Icon,
@@ -28,139 +31,59 @@ import {
   SelectValue,
 } from '@survey/ui/components/select';
 
-interface QuestionBlockProps {
-  index: number;
-  questionText: string;
-  type: 'multiple-choice' | 'short-answer';
-  options?: string[];
-}
+import { QuestionBlock } from './_components/question-block';
+import { CostBreakdown } from './_components/cost-breakdown';
+import { SectionHeading } from './_components/section-heading';
+import { LabelWithIcon } from './_components/label-with-icon';
 
-function QuestionBlock({ index, questionText, type, options }: QuestionBlockProps) {
-  const questionId = `question-${index}`;
-  const typeId = `question-type-${index}`;
+type QuestionType = 'multiple-choice' | 'short-answer';
 
-  return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-sm">Question {index}</CardTitle>
-          <span className="text-xs text-muted-foreground">
-            {type === 'multiple-choice' ? 'Multiple choice' : 'Short answer'}
-          </span>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-1.5">
-          <Label htmlFor={questionId}>Question text</Label>
-          <Input
-            id={questionId}
-            defaultValue={questionText}
-            placeholder="Enter your question…"
-          />
-        </div>
-
-        <div className="space-y-1.5">
-          <Label htmlFor={typeId}>Question type</Label>
-          <Select defaultValue={type}>
-            <SelectTrigger id={typeId} className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="multiple-choice">Multiple choice</SelectItem>
-              <SelectItem value="short-answer">Short answer</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {type === 'multiple-choice' && options && (
-          <div className="space-y-2">
-            <Label>Answer options</Label>
-            <div className="space-y-2">
-              {options.map((option, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full border border-border text-xs text-muted-foreground shrink-0">
-                    {String.fromCharCode(65 + i)}
-                  </span>
-                  <Input defaultValue={option} placeholder={`Option ${i + 1}`} />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  );
-}
-
-interface CostLineProps {
-  label: string;
-  value: string;
-  isBold?: boolean;
-}
-
-function CostLine({ label, value, isBold }: CostLineProps) {
-  return (
-    <div className="flex items-center justify-between text-xs">
-      <span className={isBold ? 'font-medium text-foreground' : 'text-muted-foreground'}>
-        {label}
-      </span>
-      <span className={isBold ? 'font-semibold text-foreground' : 'text-foreground'}>{value}</span>
-    </div>
-  );
-}
-
-function CostBreakdown() {
-  return (
-    <div className="space-y-1.5">
-      <CostLine label="Reward pool deposit" value="5.0 SOL" />
-      <CostLine label="Platform fee (2%)" value="0.1 SOL" />
-      <CostLine label="On-chain storage rent (est.)" value="~0.005 SOL" />
-      <div className="my-2 border-t border-border" />
-      <CostLine label="Total to deploy" value="5.105 SOL" isBold />
-    </div>
-  );
-}
-
-interface SectionHeadingProps {
-  step: number;
+interface QuestionData {
   id: string;
-  children: React.ReactNode;
+  questionText: string;
+  type: QuestionType;
+  options: string[];
 }
 
-function SectionHeading({ step, id, children }: SectionHeadingProps) {
-  return (
-    <div className="flex items-center gap-2">
-      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-semibold shrink-0 ring-2 ring-primary/30">
-        {step}
-      </span>
-      <h2 id={id} className="text-base font-semibold text-foreground">
-        {children}
-      </h2>
-    </div>
-  );
-}
+const INITIAL_QUESTIONS: QuestionData[] = [
+  {
+    id: '1',
+    questionText: 'How long have you been using DeFi protocols?',
+    type: 'multiple-choice',
+    options: ['Less than 6 months', '6 months – 1 year', '1 – 3 years', 'More than 3 years'],
+  },
+  {
+    id: '2',
+    questionText: 'What is the biggest friction point you experience when using DeFi apps?',
+    type: 'short-answer',
+    options: [],
+  },
+  {
+    id: '3',
+    questionText: 'Which DeFi category do you use most frequently?',
+    type: 'multiple-choice',
+    options: ['DEX / Swaps', 'Lending / Borrowing', 'Yield Farming', 'Liquid Staking'],
+  },
+];
 
-interface LabelWithIconProps {
-  htmlFor: string;
-  icon: IconSvgElement;
-  children: React.ReactNode;
-}
-
-function LabelWithIcon({ htmlFor, icon, children }: LabelWithIconProps) {
-  return (
-    <Label htmlFor={htmlFor}>
-      <div className="flex items-center gap-1.5">
-        <HugeiconsIcon icon={icon} size={12} strokeWidth={1.5} aria-hidden="true" />
-        {children}
-      </div>
-    </Label>
-  );
-}
-
+// Next.js App Router requires default export for page files
 export default function CreateSurveyPage() {
+  const [questions, setQuestions] = useState<QuestionData[]>(INITIAL_QUESTIONS);
+
+  function addQuestion() {
+    setQuestions((prev) => [
+      ...prev,
+      {
+        id: Date.now().toString(),
+        questionText: '',
+        type: 'short-answer',
+        options: [],
+      },
+    ]);
+  }
+
   return (
     <main className="space-y-8 animate-in fade-in duration-300">
-      {/* Page header */}
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold text-foreground">Create a Survey</h1>
         <p className="text-muted-foreground">
@@ -170,23 +93,16 @@ export default function CreateSurveyPage() {
       </header>
 
       <div className="flex flex-col lg:flex-row gap-8 items-start">
-        {/* Main form */}
         <div className="flex-1 space-y-8 min-w-0">
 
-          {/* Section 1: Survey details */}
           <section aria-labelledby="section-details" className="space-y-4">
             <SectionHeading step={1} id="section-details">Survey details</SectionHeading>
-
             <Card>
               <CardContent className="space-y-4 pt-4">
                 <div className="space-y-1.5">
                   <Label htmlFor="survey-title">Title</Label>
-                  <Input
-                    id="survey-title"
-                    placeholder="e.g. DeFi User Experience Research"
-                  />
+                  <Input id="survey-title" placeholder="e.g. DeFi User Experience Research" />
                 </div>
-
                 <div className="space-y-1.5">
                   <Label htmlFor="survey-description">Description</Label>
                   <Textarea
@@ -195,7 +111,6 @@ export default function CreateSurveyPage() {
                     rows={3}
                   />
                 </div>
-
                 <div className="space-y-1.5">
                   <Label htmlFor="survey-category">Category</Label>
                   <Select>
@@ -218,54 +133,36 @@ export default function CreateSurveyPage() {
             </Card>
           </section>
 
-          {/* Section 2: Questions */}
           <section aria-labelledby="section-questions" className="space-y-4">
             <SectionHeading step={2} id="section-questions">Questions</SectionHeading>
-
             <div className="space-y-4">
-              <QuestionBlock
-                index={1}
-                questionText="How long have you been using DeFi protocols?"
-                type="multiple-choice"
-                options={[
-                  'Less than 6 months',
-                  '6 months – 1 year',
-                  '1 – 3 years',
-                  'More than 3 years',
-                ]}
-              />
-              <QuestionBlock
-                index={2}
-                questionText="What is the biggest friction point you experience when using DeFi apps?"
-                type="short-answer"
-              />
-              <QuestionBlock
-                index={3}
-                questionText="Which DeFi category do you use most frequently?"
-                type="multiple-choice"
-                options={[
-                  'DEX / Swaps',
-                  'Lending / Borrowing',
-                  'Yield Farming',
-                  'Liquid Staking',
-                ]}
-              />
+              {questions.map((q, i) => (
+                <QuestionBlock
+                  key={q.id}
+                  index={i + 1}
+                  initialQuestionText={q.questionText}
+                  initialType={q.type}
+                  initialOptions={q.options}
+                />
+              ))}
             </div>
-
-            <Button type="button" variant="outline" size="lg" className="gap-2 px-8 w-full sm:w-auto">
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              className="gap-2 w-full sm:w-auto"
+              onClick={addQuestion}
+            >
               <HugeiconsIcon icon={Add01Icon} size={13} strokeWidth={1.5} aria-hidden="true" />
               Add question
             </Button>
           </section>
 
-          {/* Section 3: Economics */}
           <section aria-labelledby="section-economics" className="space-y-4">
             <SectionHeading step={3} id="section-economics">Economics</SectionHeading>
-
             <Card>
               <CardContent className="space-y-4 pt-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Stake per participant */}
                   <div className="space-y-1.5">
                     <LabelWithIcon htmlFor="stake-amount" icon={LockIcon}>
                       Stake per participant
@@ -289,7 +186,6 @@ export default function CreateSurveyPage() {
                     </div>
                   </div>
 
-                  {/* Reward pool */}
                   <div className="space-y-1.5">
                     <LabelWithIcon htmlFor="reward-pool" icon={Coins01Icon}>
                       Reward pool total
@@ -313,20 +209,13 @@ export default function CreateSurveyPage() {
                     </div>
                   </div>
 
-                  {/* Max participants */}
                   <div className="space-y-1.5">
                     <LabelWithIcon htmlFor="max-participants" icon={User02Icon}>
                       Max participants
                     </LabelWithIcon>
-                    <Input
-                      id="max-participants"
-                      type="number"
-                      min="1"
-                      defaultValue="100"
-                    />
+                    <Input id="max-participants" type="number" min="1" defaultValue="100" />
                   </div>
 
-                  {/* Duration */}
                   <div className="space-y-1.5">
                     <LabelWithIcon htmlFor="survey-duration" icon={Clock01Icon}>
                       Duration
@@ -348,10 +237,8 @@ export default function CreateSurveyPage() {
             </Card>
           </section>
 
-          {/* Section 4: Review & Deploy */}
           <section aria-labelledby="section-deploy" className="space-y-4">
             <SectionHeading step={4} id="section-deploy">Review &amp; Deploy</SectionHeading>
-
             <Card>
               <CardHeader>
                 <CardTitle>Survey summary</CardTitle>
@@ -361,11 +248,10 @@ export default function CreateSurveyPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {/* Summary grid */}
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div className="space-y-0.5">
                     <p className="text-muted-foreground">Questions</p>
-                    <p className="font-medium text-foreground">3 questions</p>
+                    <p className="font-medium text-foreground">{questions.length} questions</p>
                   </div>
                   <div className="space-y-0.5">
                     <p className="text-muted-foreground">Duration</p>
@@ -388,10 +274,15 @@ export default function CreateSurveyPage() {
                 <Button
                   type="button"
                   size="lg"
-                  className="w-full gap-2 px-8 mt-2"
+                  className="w-full gap-2 mt-2"
                   aria-label="Deploy survey to Solana devnet"
                 >
-                  <HugeiconsIcon icon={Blockchain01Icon} size={14} strokeWidth={1.5} aria-hidden="true" />
+                  <HugeiconsIcon
+                    icon={Blockchain01Icon}
+                    size={14}
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  />
                   Deploy Survey
                 </Button>
               </CardContent>
@@ -399,7 +290,6 @@ export default function CreateSurveyPage() {
           </section>
         </div>
 
-        {/* Sidebar: cost breakdown (lg+) */}
         <aside
           aria-label="Cost breakdown"
           className="hidden lg:block w-72 shrink-0 sticky top-8"
@@ -420,7 +310,6 @@ export default function CreateSurveyPage() {
             </CardHeader>
             <CardContent className="space-y-3">
               <CostBreakdown />
-
               <div className="pt-2 border-t border-border">
                 <div className="flex items-start gap-2 text-xs text-muted-foreground">
                   <HugeiconsIcon

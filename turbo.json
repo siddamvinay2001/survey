@@ -19,6 +19,21 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "anchor:build": {
+      "dependsOn": ["^anchor:build"],
+      "inputs": ["packages/anchor/**"],
+      "outputs": ["packages/anchor/target/**"]
+    },
+    "anchor:test": {
+      "dependsOn": ["anchor:build"],
+      "cache": false
+    },
+    "db:generate": {
+      "outputs": ["node_modules/.prisma/**", "src/generated/**"]
+    },
+    "db:migrate": {
+      "cache": false
     }
   }
 }

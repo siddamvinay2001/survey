@@ -3,7 +3,7 @@ import { Geist_Mono, Inter } from "next/font/google";
 
 import "@survey/ui/globals.css";
 
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@survey/ui/components/theme-provider";
 import { Providers } from "@/lib/providers";
 import { cn } from "@survey/ui/lib/utils";
 

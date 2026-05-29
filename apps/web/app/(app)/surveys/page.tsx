@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import {
   Search01Icon,
@@ -251,6 +254,13 @@ function EmptyState() {
 }
 
 export default function SurveysPage() {
+  const [activeFilter, setActiveFilter] = useState<FilterTab>('all');
+
+  const filteredSurveys =
+    activeFilter === 'all'
+      ? MOCK_SURVEYS
+      : MOCK_SURVEYS.filter((s) => s.status === activeFilter);
+
   return (
     <main className="space-y-8 animate-in fade-in duration-300">
       <header className="space-y-2 pb-6 border-b border-border">
@@ -289,10 +299,11 @@ export default function SurveysPage() {
               key={tab.value}
               type="button"
               role="tab"
-              aria-selected={tab.value === 'all'}
+              aria-selected={activeFilter === tab.value}
+              onClick={() => setActiveFilter(tab.value)}
               className={cn(
                 'rounded-full border border-border px-3 py-1 text-xs font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                tab.value === 'all'
+                activeFilter === tab.value
                   ? 'bg-primary text-primary-foreground border-primary'
                   : 'bg-background text-muted-foreground hover:text-foreground hover:bg-muted',
               )}
@@ -305,8 +316,8 @@ export default function SurveysPage() {
 
       <section aria-label="Survey listings">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {MOCK_SURVEYS.length > 0 ? (
-            MOCK_SURVEYS.map((survey) => <SurveyCard key={survey.id} survey={survey} />)
+          {filteredSurveys.length > 0 ? (
+            filteredSurveys.map((survey) => <SurveyCard key={survey.id} survey={survey} />)
           ) : (
             <EmptyState />
           )}
