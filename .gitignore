@@ -1,69 +1,56 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# ---- dependencies ----
+# dependencies
 node_modules
 .pnp
-.pnp.js
-.pnpm-store
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# ---- build outputs ----
-dist
-build
-out
-.next
-.turbo
-*.tsbuildinfo
-next-env.d.ts
-
-# ---- testing ----
+# testing
 coverage
-.nyc_output
-playwright-report
-test-results
 
-# ---- Rust / Anchor / Solana ----
-target
-**/target
-.anchor
-**/.anchor
-*.so
-test-ledger
-.crates.toml
-.crates2.json
+# next.js
+.next/
+out/
 
-# ---- Prisma ----
-packages/db/prisma/migrations/dev.db*
+# production
+build
+dist
 
-# ---- env files ----
-.env
-.env*.local
-.env.development
-.env.production
-!.env.example
+# turbo
+.turbo
 
-# ---- secrets / keypairs ----
-*.pem
-*.key
-*-keypair.json
-**/keypairs/
-validator-keypair.json
-
-# ---- editor / OS ----
+# misc
 .DS_Store
-.vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
-.idea
-*.swp
-*.swo
+*.pem
 
-# ---- vercel ----
-.vercel
-
-# ---- logs ----
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-logs
-*.log
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# anchor / solana
+target/
+.anchor/
+*.so
+test-ledger/
+*-keypair.json
+apps/web/server/keypairs/
+
+# pnpm
+.pnpm-store/

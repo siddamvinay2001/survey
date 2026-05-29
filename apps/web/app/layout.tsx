@@ -1,19 +1,40 @@
-import type { Metadata } from 'next';
-import type { ReactNode } from 'react';
+import type { Metadata } from "next";
+import { Geist_Mono, Inter } from "next/font/google";
 
-import { Providers } from '~/lib/providers';
-import './globals.css';
+import "@survey/ui/globals.css";
+
+import { ThemeProvider } from "@/components/theme-provider";
+import { Providers } from "@/lib/providers";
+import { cn } from "@survey/ui/lib/utils";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+const fontMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
-  title: 'Survey — Honest answers, on-chain',
-  description: 'Solana-based survey platform with stake-and-slash spam resistance.',
+  title: "Survey — Honest answers, on-chain",
+  description:
+    "Solana-based survey platform with stake-and-slash spam resistance.",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn("antialiased", fontMono.variable, "font-sans", inter.variable)}
+    >
       <body>
-        <Providers>{children}</Providers>
+        <ThemeProvider>
+          <Providers>{children}</Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

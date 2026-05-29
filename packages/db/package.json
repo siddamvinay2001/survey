@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@survey/config": "workspace:*",
+    "@types/node": "^20",
     "prisma": "^5.22.0",
     "typescript": "^5.6.3"
   },
