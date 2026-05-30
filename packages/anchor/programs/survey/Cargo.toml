@@ -2,6 +2,9 @@
 name = "survey"
 version = "0.1.0"
 edition = "2021"
+# Pin MSRV to the Solana BPF toolchain's Cargo (1.84) so the resolver avoids
+# edition2024 transitive deps (block-buffer 0.12, indexmap 2.14, ...) it can't parse.
+rust-version = "1.84"
 description = "Stake-and-slash survey escrow program"
 
 [lib]

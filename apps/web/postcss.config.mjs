@@ -1,1 +1,1 @@
-export { default } from "@survey/ui/postcss.config";
+export { default } from '@survey/ui/postcss.config';

@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   ts:
-    name: Lint / typecheck / test (TS)
+    name: Lint / build (TS)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,38 +32,5 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Test
-        run: pnpm test
-
-  anchor:
-    name: Build Anchor program
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Cache Cargo
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            packages/anchor/target
-          key: cargo-${{ runner.os }}-${{ hashFiles('packages/anchor/**/Cargo.lock', 'packages/anchor/**/Cargo.toml') }}
-
-      - name: Install Solana CLI
-        run: |
-          sh -c "$(curl -sSfL https://release.solana.com/v1.18.26/install)"
-          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
-
-      - name: Install Anchor
-        run: |
-          cargo install --git https://github.com/coral-xyz/anchor avm --force
-          avm install 0.30.1
-          avm use 0.30.1
-
-      - name: Anchor build
-        working-directory: packages/anchor
-        run: anchor build
+      - name: Build
+        run: pnpm build

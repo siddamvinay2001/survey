@@ -1,5 +1,5 @@
 import 'server-only';
-import { NextResponse, type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 // TODO(MVP-2): list surveys (GET) and create draft surveys (POST).
 //   GET  -> filter by state=open, return paginated list with reward + stake.

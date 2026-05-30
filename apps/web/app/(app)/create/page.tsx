@@ -1,27 +1,26 @@
 'use client';
 
-import { useState } from 'react';
-import { HugeiconsIcon } from '@hugeicons/react';
 import {
   Add01Icon,
-  Coins01Icon,
-  CheckmarkCircle01Icon,
   Blockchain01Icon,
-  User02Icon,
+  CheckmarkCircle01Icon,
   Clock01Icon,
+  Coins01Icon,
   LockIcon,
+  User02Icon,
 } from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { useState } from 'react';
 
 import { Button } from '@survey/ui/components/button';
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from '@survey/ui/components/card';
 import { Input } from '@survey/ui/components/input';
-import { Textarea } from '@survey/ui/components/textarea';
 import { Label } from '@survey/ui/components/label';
 import {
   Select,
@@ -30,11 +29,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@survey/ui/components/select';
+import { Textarea } from '@survey/ui/components/textarea';
 
-import { QuestionBlock } from './_components/question-block';
 import { CostBreakdown } from './_components/cost-breakdown';
-import { SectionHeading } from './_components/section-heading';
 import { LabelWithIcon } from './_components/label-with-icon';
+import { QuestionBlock } from './_components/question-block';
+import { SectionHeading } from './_components/section-heading';
 
 type QuestionType = 'multiple-choice' | 'short-answer';
 
@@ -94,9 +94,10 @@ export default function CreateSurveyPage() {
 
       <div className="flex flex-col lg:flex-row gap-8 items-start">
         <div className="flex-1 space-y-8 min-w-0">
-
           <section aria-labelledby="section-details" className="space-y-4">
-            <SectionHeading step={1} id="section-details">Survey details</SectionHeading>
+            <SectionHeading step={1} id="section-details">
+              Survey details
+            </SectionHeading>
             <Card>
               <CardContent className="space-y-4 pt-4">
                 <div className="space-y-1.5">
@@ -134,7 +135,9 @@ export default function CreateSurveyPage() {
           </section>
 
           <section aria-labelledby="section-questions" className="space-y-4">
-            <SectionHeading step={2} id="section-questions">Questions</SectionHeading>
+            <SectionHeading step={2} id="section-questions">
+              Questions
+            </SectionHeading>
             <div className="space-y-4">
               {questions.map((q, i) => (
                 <QuestionBlock
@@ -159,7 +162,9 @@ export default function CreateSurveyPage() {
           </section>
 
           <section aria-labelledby="section-economics" className="space-y-4">
-            <SectionHeading step={3} id="section-economics">Economics</SectionHeading>
+            <SectionHeading step={3} id="section-economics">
+              Economics
+            </SectionHeading>
             <Card>
               <CardContent className="space-y-4 pt-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -238,7 +243,9 @@ export default function CreateSurveyPage() {
           </section>
 
           <section aria-labelledby="section-deploy" className="space-y-4">
-            <SectionHeading step={4} id="section-deploy">Review &amp; Deploy</SectionHeading>
+            <SectionHeading step={4} id="section-deploy">
+              Review &amp; Deploy
+            </SectionHeading>
             <Card>
               <CardHeader>
                 <CardTitle>Survey summary</CardTitle>
@@ -290,10 +297,7 @@ export default function CreateSurveyPage() {
           </section>
         </div>
 
-        <aside
-          aria-label="Cost breakdown"
-          className="hidden lg:block w-72 shrink-0 sticky top-8"
-        >
+        <aside aria-label="Cost breakdown" className="hidden lg:block w-72 shrink-0 sticky top-8">
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">

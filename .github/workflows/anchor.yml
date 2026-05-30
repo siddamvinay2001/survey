@@ -1,0 +1,43 @@
+name: Anchor build
+
+# Heavy job (Solana toolchain + avm + anchor build, ~15-20 min, mostly uncached),
+# so it is NOT run on every PR. Trigger it manually from the Actions tab before
+# merging changes under packages/anchor/**.
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  anchor:
+    name: Build Anchor program
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ~/.avm
+            packages/anchor/target
+          key: cargo-${{ runner.os }}-${{ hashFiles('packages/anchor/**/Cargo.lock', 'packages/anchor/**/Cargo.toml') }}
+
+      - name: Install Solana CLI
+        run: |
+          sh -c "$(curl -sSfL https://release.solana.com/v1.18.26/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+
+      - name: Install Anchor
+        run: |
+          cargo install --git https://github.com/coral-xyz/anchor avm --force
+          avm install 0.31.1
+          avm use 0.31.1
+
+      - name: Anchor build
+        working-directory: packages/anchor
+        run: anchor build
