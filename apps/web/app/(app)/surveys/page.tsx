@@ -1,26 +1,26 @@
 'use client';
 
-import { useState } from 'react';
-import { HugeiconsIcon } from '@hugeicons/react';
 import {
-  Search01Icon,
   Clock01Icon,
-  User02Icon,
   Coins01Icon,
-  LockIcon,
   FilterIcon,
+  LockIcon,
+  Search01Icon,
+  User02Icon,
 } from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { useState } from 'react';
 
+import { Badge } from '@survey/ui/components/badge';
 import { Button } from '@survey/ui/components/button';
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
   CardDescription,
   CardFooter,
+  CardHeader,
+  CardTitle,
 } from '@survey/ui/components/card';
-import { Badge } from '@survey/ui/components/badge';
 import { Input } from '@survey/ui/components/input';
 import { cn } from '@survey/ui/lib/utils';
 
@@ -160,7 +160,10 @@ function StatusBadge({ status }: StatusBadgeProps) {
   }
   if (status === 'ending-soon') {
     return (
-      <Badge variant="secondary" className="bg-destructive/10 text-destructive border-destructive/20">
+      <Badge
+        variant="secondary"
+        className="bg-destructive/10 text-destructive border-destructive/20"
+      >
         Ending Soon
       </Badge>
     );
@@ -217,9 +220,7 @@ function SurveyCard({ survey }: SurveyCardProps) {
           className="w-full px-8 transition-all duration-150"
           disabled={isCompleted}
           aria-label={
-            isCompleted
-              ? `${survey.title} — survey completed`
-              : `Participate in ${survey.title}`
+            isCompleted ? `${survey.title} — survey completed` : `Participate in ${survey.title}`
           }
         >
           {isCompleted ? 'Survey ended' : 'Participate'}
@@ -231,8 +232,7 @@ function SurveyCard({ survey }: SurveyCardProps) {
 
 function EmptyState() {
   return (
-    <div
-      role="status"
+    <output
       aria-live="polite"
       className="col-span-full flex flex-col items-center gap-4 py-16 text-center"
     >
@@ -249,7 +249,7 @@ function EmptyState() {
           Try a different filter or check back soon — new surveys launch every day.
         </p>
       </div>
-    </div>
+    </output>
   );
 }
 
@@ -257,9 +257,7 @@ export default function SurveysPage() {
   const [activeFilter, setActiveFilter] = useState<FilterTab>('all');
 
   const filteredSurveys =
-    activeFilter === 'all'
-      ? MOCK_SURVEYS
-      : MOCK_SURVEYS.filter((s) => s.status === activeFilter);
+    activeFilter === 'all' ? MOCK_SURVEYS : MOCK_SURVEYS.filter((s) => s.status === activeFilter);
 
   return (
     <main className="space-y-8 animate-in fade-in duration-300">
@@ -289,11 +287,7 @@ export default function SurveysPage() {
           </div>
         </div>
 
-        <div
-          role="tablist"
-          aria-label="Filter surveys by status"
-          className="flex flex-wrap gap-2"
-        >
+        <div role="tablist" aria-label="Filter surveys by status" className="flex flex-wrap gap-2">
           {FILTER_TABS.map((tab) => (
             <button
               key={tab.value}
