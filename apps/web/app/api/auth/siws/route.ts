@@ -1,5 +1,5 @@
 import 'server-only';
-import { NextResponse, type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 // TODO(MVP-2): Sign-In With Solana flow.
 // POST /api/auth/siws/challenge -> { nonce } (also sets http-only cookie with nonce)

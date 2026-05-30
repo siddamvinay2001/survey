@@ -1,23 +1,22 @@
-import type { Metadata } from "next";
-import { Geist_Mono, Inter } from "next/font/google";
+import type { Metadata } from 'next';
+import { Geist_Mono, Inter } from 'next/font/google';
 
-import "@survey/ui/globals.css";
+import '@survey/ui/globals.css';
 
-import { ThemeProvider } from "@survey/ui/components/theme-provider";
-import { Providers } from "@/lib/providers";
-import { cn } from "@survey/ui/lib/utils";
+import { Providers } from '@/lib/providers';
+import { ThemeProvider } from '@survey/ui/components/theme-provider';
+import { cn } from '@survey/ui/lib/utils';
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+  subsets: ['latin'],
+  variable: '--font-mono',
 });
 
 export const metadata: Metadata = {
-  title: "Survey — Honest answers, on-chain",
-  description:
-    "Solana-based survey platform with stake-and-slash spam resistance.",
+  title: 'Survey — Honest answers, on-chain',
+  description: 'Solana-based survey platform with stake-and-slash spam resistance.',
 };
 
 export default function RootLayout({
@@ -29,7 +28,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", inter.variable)}
+      className={cn('antialiased', fontMono.variable, 'font-sans', inter.variable)}
     >
       <body>
         <ThemeProvider>

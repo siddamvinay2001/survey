@@ -1,5 +1,5 @@
 import 'server-only';
-import { NextResponse, type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 // TODO(MVP-4): the validator endpoint.
 // Triggered either by cron (when survey closes) or manually by the creator.

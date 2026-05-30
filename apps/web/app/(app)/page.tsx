@@ -1,25 +1,25 @@
-import Link from 'next/link';
-import { HugeiconsIcon, type IconSvgElement } from '@hugeicons/react';
 import {
-  LockIcon,
-  Shield01Icon,
-  MoneyBag01Icon,
-  CheckmarkCircle01Icon,
-  Search01Icon,
-  Blockchain01Icon,
-  Coins01Icon,
   Analytics01Icon,
   ArrowRight01Icon,
   Award01Icon,
+  Blockchain01Icon,
+  CheckmarkCircle01Icon,
+  Coins01Icon,
+  LockIcon,
+  MoneyBag01Icon,
+  Search01Icon,
+  Shield01Icon,
 } from '@hugeicons/core-free-icons';
+import { HugeiconsIcon, type IconSvgElement } from '@hugeicons/react';
+import Link from 'next/link';
 
 import { Button } from '@survey/ui/components/button';
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from '@survey/ui/components/card';
 
 interface StatCardProps {
@@ -52,7 +52,13 @@ function StepCard({ step, title, description, icon }: StepCardProps) {
             {step}
           </span>
           <div className="flex items-center gap-2">
-            <HugeiconsIcon icon={icon} size={16} strokeWidth={1.5} className="text-primary" aria-hidden="true" />
+            <HugeiconsIcon
+              icon={icon}
+              size={16}
+              strokeWidth={1.5}
+              className="text-primary"
+              aria-hidden="true"
+            />
             <CardTitle>{title}</CardTitle>
           </div>
         </div>
@@ -75,7 +81,13 @@ function FeatureCard({ title, description, icon }: FeatureCardProps) {
     <Card className="flex-1 transition-shadow duration-200 hover:shadow-md bg-card border-accent/40">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <HugeiconsIcon icon={icon} size={20} strokeWidth={1.5} className="text-accent-foreground" aria-hidden="true" />
+          <HugeiconsIcon
+            icon={icon}
+            size={20}
+            strokeWidth={1.5}
+            className="text-accent-foreground"
+            aria-hidden="true"
+          />
           <CardTitle>{title}</CardTitle>
         </div>
       </CardHeader>
@@ -89,7 +101,6 @@ function FeatureCard({ title, description, icon }: FeatureCardProps) {
 export default function LandingPage() {
   return (
     <main className="animate-in fade-in duration-300">
-
       {/* Hero — olive-tinted warm section */}
       <section className="bg-primary/10 rounded-2xl py-20 md:py-28 px-8 sm:px-12 mb-6">
         <div className="space-y-6 text-center sm:text-left max-w-3xl">
@@ -107,12 +118,22 @@ export default function LandingPage() {
               <Button size="lg" className="gap-2 px-8">
                 <HugeiconsIcon icon={Search01Icon} size={14} strokeWidth={1.5} aria-hidden="true" />
                 Browse surveys
-                <HugeiconsIcon icon={ArrowRight01Icon} size={14} strokeWidth={1.5} aria-hidden="true" />
+                <HugeiconsIcon
+                  icon={ArrowRight01Icon}
+                  size={14}
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
               </Button>
             </Link>
             <Link href="/create">
               <Button size="lg" variant="outline" className="gap-2 px-8">
-                <HugeiconsIcon icon={Blockchain01Icon} size={14} strokeWidth={1.5} aria-hidden="true" />
+                <HugeiconsIcon
+                  icon={Blockchain01Icon}
+                  size={14}
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
                 Create a survey
               </Button>
             </Link>
@@ -188,7 +209,9 @@ export default function LandingPage() {
           <div className="space-y-2 text-center sm:text-left">
             <div className="flex items-center justify-center sm:justify-start gap-2">
               <HugeiconsIcon icon={Award01Icon} size={20} strokeWidth={1.5} aria-hidden="true" />
-              <h2 className="text-xl font-semibold text-primary-foreground">Ready to get quality data?</h2>
+              <h2 className="text-xl font-semibold text-primary-foreground">
+                Ready to get quality data?
+              </h2>
             </div>
             <p className="text-sm text-primary-foreground/80">
               Launch a survey on Solana devnet today. No spam, no bots — just honest answers.

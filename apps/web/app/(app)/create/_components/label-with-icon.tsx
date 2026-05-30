@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
 import { HugeiconsIcon, type IconSvgElement } from '@hugeicons/react';
 import { Label } from '@survey/ui/components/label';
+import type { ReactNode } from 'react';
 
 interface LabelWithIconProps {
   htmlFor: string;

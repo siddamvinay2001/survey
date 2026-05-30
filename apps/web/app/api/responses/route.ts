@@ -1,5 +1,5 @@
 import 'server-only';
-import { NextResponse, type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 // TODO(MVP-3): accept a response from a participant.
 //   Required body: { surveyId, encryptedPayload, commitmentHash, txSignature }
