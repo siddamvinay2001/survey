@@ -39,9 +39,7 @@
       "suspicious": {
         "noExplicitAny": "error"
       },
-      "style": {
-        "noDefaultExport": "warn"
-      },
+      "style": {},
       "correctness": {
         "noUnusedVariables": "warn"
       }

@@ -1,5 +1,5 @@
-import { AnchorProvider, Program, type Idl } from '@coral-xyz/anchor';
-import { Connection, PublicKey, type Keypair } from '@solana/web3.js';
+import { AnchorProvider, type Idl, Program } from '@coral-xyz/anchor';
+import { Connection, type Keypair, PublicKey } from '@solana/web3.js';
 
 import type { SurveyIdl } from './idl/index.js';
 

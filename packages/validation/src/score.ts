@@ -32,7 +32,6 @@ export function combineScores(input: CombineInput): FinalScore {
 }
 
 function countFlags(h: HeuristicScore): number {
-  return [h.responseTimeFlag, h.duplicateFlag, h.lengthFlag, h.copyFromPromptFlag].filter(
-    Boolean,
-  ).length;
+  return [h.responseTimeFlag, h.duplicateFlag, h.lengthFlag, h.copyFromPromptFlag].filter(Boolean)
+    .length;
 }
