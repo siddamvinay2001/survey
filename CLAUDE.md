@@ -71,6 +71,14 @@ pnpm anchor:build               # compiles the Solana program
 pnpm anchor:test                # runs anchor tests on a local validator
 ```
 
+### Linting & formatting
+Biome is the single linter + formatter (there is no ESLint/Prettier). The CI `Lint` step runs `pnpm lint`.
+```bash
+pnpm lint                       # biome check .  (lint + format check, no writes)
+pnpm lint:fix                   # biome check --write .  (apply safe fixes) — NOT `pnpm lint --fix`
+```
+A `PostToolUse` hook in `.claude/settings.json` runs `biome check --write` on each TS/JS/JSON file Claude edits, so files are auto-fixed in-session. It does not replace running `pnpm lint` before pushing.
+
 ### Making Anchor program changes
 1. Edit Rust under `packages/anchor/programs/survey/src/`.
 2. `pnpm anchor:build` regenerates the IDL.

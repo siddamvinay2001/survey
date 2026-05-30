@@ -1,6 +1,6 @@
 # Cap transitive deps at each crate's declared rust-version (1.84, the Solana BPF
 # toolchain's Cargo) instead of always resolving to latest. Avoids pulling in
 # edition2024 crates that Cargo 1.84 cannot parse. Works with resolver = "2";
-# Anchor 0.30.1's manifest parser rejects resolver = "3".
+# Anchor 0.31.1's manifest parser rejects resolver = "3".
 [resolver]
 incompatible-rust-versions = "fallback"
